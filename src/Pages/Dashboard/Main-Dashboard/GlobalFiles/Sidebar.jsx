@@ -123,7 +123,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null}
-            {user?.userType === "admin" ? (
+            {/* {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/addnurse"}>
                 <div className="icon">
                   <GiNurseFemale className="mainIcon" />
@@ -135,8 +135,8 @@ const Sidebar = () => {
                   Add Nurse
                 </div>
               </Link>
-            ) : null}
-            {user?.userType === "admin" ? (
+            ) : null} */}
+            {/* {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/admin"}>
                 <div className="icon">
                   <RiAdminLine
@@ -151,9 +151,9 @@ const Sidebar = () => {
                   Add Admin
                 </div>
               </Link>
-            ) : null}
+            ) : null} */}
 
-            {user?.userType === "admin" ? (
+            {/* {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/addbeds"}>
                 <div className="icon">
                   <TbBed className="mainIcon" />
@@ -165,9 +165,9 @@ const Sidebar = () => {
                   Add Beds
                 </div>
               </Link>
-            ) : null}
+            ) : null} */}
 
-            {user?.userType === "admin" ? (
+            {/* {user?.userType === "admin" ? (
               <Link
                 className="link"
                 activeclassname="active"
@@ -183,7 +183,7 @@ const Sidebar = () => {
                   Add AMBU
                 </div>
               </Link>
-            ) : null}
+            ) : null} */}
             {/* {user?.userType === "admin" ? (
               <Link
                 className="link"
@@ -230,7 +230,7 @@ const Sidebar = () => {
                 Beds
               </div>
             </Link>
-            {user?.userType === "doctor" ? (
+            {/* {user?.userType === "doctor" ? (
               <Link className="link" activeclassname="active" to={"/reports"}>
                 <div className="icon">
                   <TbReportMedical className="mainIcon" />
@@ -242,7 +242,7 @@ const Sidebar = () => {
                   Reports
                 </div>
               </Link>
-            ) : null}
+            ) : null} */}
             {user?.userType === "doctor" ? (
               <Link
                 className="link"

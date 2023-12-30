@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Radio } from "antd";
-import banner from "../../../img/banner.png";
-import admin from "../../../img/admin.jpg";
+import banner from "../../../img/banner1.jpeg";
+import admin from "../../../img/user.png";
 import "./DLogin.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,11 @@ import { Drawer } from "antd";
 const notify = (text) => toast(text);
 
 const DLogin = () => {
+
+  const img_style={
+    width: '100%'
+  }
+
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -29,7 +34,7 @@ const DLogin = () => {
 
   // ************************************************
   const [Loading, setLoading] = useState(false);
-  const [placement, SetPlacement] = useState("Nurse");
+  const [placement, SetPlacement] = useState("Doctor");
   const [formvalue, setFormvalue] = useState({
     ID: "",
     password: "",
@@ -44,29 +49,30 @@ const DLogin = () => {
     e.preventDefault();
     setLoading(true);
     if (formvalue.ID !== "" && formvalue.password !== "") {
-      if (placement === "Nurse") {
-        let data = {
-          ...formvalue,
-          nurseID: formvalue.ID,
-        };
-        dispatch(NurseLogin(data)).then((res) => {
-          if (res.message === "Successful") {
-            notify("Login Successful");
-            setLoading(false);
-            return navigate("/dashboard");
-          }
-          if (res.message === "Wrong credentials") {
-            setLoading(false);
+      // if (placement === "Nurse") {
+      //   let data = {
+      //     ...formvalue,
+      //     nurseID: formvalue.ID,
+      //   };
+      //   dispatch(NurseLogin(data)).then((res) => {
+      //     if (res.message === "Successful") {
+      //       notify("Login Successful");
+      //       setLoading(false);
+      //       return navigate("/dashboard");
+      //     }
+      //     if (res.message === "Wrong credentials") {
+      //       setLoading(false);
 
-            notify("Wrong credentials");
-          }
-          if (res.message === "Error") {
-            setLoading(false);
+      //       notify("Wrong credentials");
+      //     }
+      //     if (res.message === "Error") {
+      //       setLoading(false);
 
-            notify("Something went Wrong, Please Try Again");
-          }
-        });
-      } else if (placement === "Doctor") {
+      //       notify("Something went Wrong, Please Try Again");
+      //     }
+      //   });
+      // } 
+       if (placement === "Doctor") {
         let data = {
           ...formvalue,
           docID: formvalue.ID,
@@ -158,7 +164,7 @@ const DLogin = () => {
 
       <div className="mainLoginPage">
         <div className="leftside">
-          <img src={banner} alt="banner" />
+          <img src={banner} alt="banner" style={img_style}/>
         </div>
         <div className="rightside">
           <h1>Login</h1>
@@ -168,9 +174,9 @@ const DLogin = () => {
               onChange={placementChange}
               className={"radiogroup"}
             >
-              <Radio.Button value="Nurse" className={"radiobutton"}>
+              {/* <Radio.Button value="Nurse" className={"radiobutton"}>
                 Nurse
-              </Radio.Button>
+              </Radio.Button> */}
               <Radio.Button value="Doctor" className={"radiobutton"}>
                 Doctor
               </Radio.Button>
@@ -183,8 +189,8 @@ const DLogin = () => {
             <img src={admin} alt="profile" />
           </div>
           <div>
-            <p>ID - 100</p>
-            <p>Password - masai</p>
+            {/* <p>ID - 100</p>
+            <p>Password - masai</p> */}
             <form onSubmit={HandleSubmit}>
               <h3>{placement} ID</h3>
               <input
@@ -230,7 +236,7 @@ const DLogin = () => {
                     required
                   >
                     <option value="">User Type</option>
-                    <option value="nurse">Nurse</option>
+                    {/* <option value="nurse">Nurse</option> */}
                     <option value="doctor">Doctor</option>
                     <option value="admin">Admin</option>
                   </select>

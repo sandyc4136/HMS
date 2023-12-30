@@ -10,7 +10,15 @@ const Beds_Rooms = () => {
 
   const dispatch = useDispatch();
 
-  const { beds } = useSelector((state) => state.data);
+  let { beds } = useSelector((state) => state.data);
+  beds=[
+    {room:1,bed:1,status:"Occupied",patient:"Sameer Arora",disease:"Conjuctivitis ",doctor:"Dr. Ayesha Desai", discharge: "Admit"},
+    {room:1,bed:2,status:"Occupied",patient:"Akshay Verma",disease:"Tooth Cavities",doctor:"Dr. Priya Kapoor", discharge: "Admit"},
+    {room:2,bed:1,status:"Occupied",patient:"Rohit Patel",disease:"Coronary Artery",doctor:"Dr. Vikram Sharma", discharge: "Admit"},
+    {room:2,bed:2,status:"Occupied",patient:"Kheyali Goud",disease:"Muscular Dystrophy",doctor:"Dr. Rajendra Patel", discharge: "Admit"},
+    {room:3,bed:1,status:"Occupied",patient:"Pridev Joshi",disease:"Cataract surgery",doctor:"Dr. Smita Choudhary",discharge: "Admit"},
+    {room:3,bed:2,status:"Occupied",patient:"Ankita sonwane",disease:"Neuro Muscular disorder",doctor:"Dr. Salman Ajani", discharge: "Admit"},
+  ]
 
   const DischargePatient = (_id) => {
     let data = {
@@ -45,15 +53,15 @@ const Beds_Rooms = () => {
                     <th>Patient</th>
                     <th>Disease</th>
                     <th>Doctor</th>
-                    <th>Discharge</th>
+                    <th>Discharge/Admit</th>
                   </tr>
                 </thead>
                 <tbody>
                   {beds?.map((ele) => {
                     return (
                       <tr>
-                        <td>{ele.roomNumber}</td>
-                        <td style={{ marginLeft: "1rem" }}>{ele.bedNumber}</td>
+                        <td>{ele.room}</td>
+                        <td style={{ marginLeft: "1rem" }}>{ele.bed}</td>
                         <td
                           style={{
                             color:
@@ -61,25 +69,22 @@ const Beds_Rooms = () => {
                             fontWeight: "bold",
                           }}
                         >
-                          {ele.occupied}
+                         {ele.status} 
                         </td>
                         <td>
-                          {ele.patientID
+                          {/* {ele.patientID
                             ? ele.patientID.patientName
-                            : "No Data"}
+                            : "No Data"} */}
+                            {ele.patient}
                         </td>
                         <td>
-                          {ele.patientID?.disease
-                            ? ele.patientID.disease
-                            : "No Data"}
+                        {ele.disease}
                         </td>
                         <td>
-                          {ele.patientID?.docID
-                            ? ele.patientID.docID.docName
-                            : "No Data"}
+                        {ele.doctor}
                         </td>
                         <td>
-                          <button
+                          {/* <button
                             disabled={ele.occupied === "available"}
                             style={{
                               border: "none",
@@ -91,9 +96,9 @@ const Beds_Rooms = () => {
                                 ele.occupied === "available" ? "" : "pointer",
                             }}
                             onClick={() => DischargePatient(ele._id)}
-                          >
-                            Discharge
-                          </button>
+                          > */}
+                            {ele.discharge}
+                          {/* </button> */}
                         </td>
                       </tr>
                     );

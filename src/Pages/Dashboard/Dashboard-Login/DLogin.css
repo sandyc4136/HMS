@@ -4,7 +4,9 @@
   align-items: center;
   gap: 10rem;
   height: 100vh;
-  background-color: rgba(255, 243, 243, 0.874);
+  gap: 1rem;
+  background-color: rgba(239, 208, 208, 0.974);
+  /* background-color: #ceb6d2; */
 }
 
 .leftside {
@@ -12,7 +14,9 @@
 }
 
 .leftside img {
-  width: 100%;
+  width: 850px;
+  height: 580px;
+border-radius: 10px;
 }
 
 /* ********************************************************************** */
@@ -23,7 +27,7 @@
   text-align: center;
   width: 35%;
   border-radius: 10px;
-  background-color: white;
+  background-color: rgb(203, 185, 219);
 }
 
 .Profileimg {
@@ -39,7 +43,7 @@
 }
 
 .radiobutton {
-  width: 33%;
+  width: 50%;
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -51,13 +55,14 @@
 .rightside input {
   display: block;
   width: 100%;
-  background-color: rgba(250, 225, 225, 0.874);
+  background-color: #ffffff;
   height: 3rem;
   font-size: 1.2rem;
   margin: 10px 0px;
   border-radius: 5px;
   border: none;
   padding: 10px;
+  outline: none;
 }
 
 .rightside button {

@@ -14,6 +14,7 @@ import { Button, message, Modal } from "antd";
 import { UpdateDoctor, UpdateNurse } from "../../../../../Redux/auth/action";
 import { GetDoctorDetails } from "../../../../../Redux/Datas/action";
 import { Navigate } from "react-router-dom";
+import image from "../../../../../img/Doctorr1.jpeg";
 import "./CSS/Doctor_Profile.css";
 
 // *********************************************************
@@ -88,12 +89,16 @@ const Doctor_Profile = () => {
           <div className="maindoctorProfile">
             <div className="firstBox">
               <div>
-                <img src={data?.user?.image} alt="docimg" />
+                {/* <img src={data?.user?.image} alt="docimg" /> */}
+                <img src={image} alt="docimg" />
               </div>
               <hr />
               <div className="singleitemdiv">
                 <GiMeditation className="singledivicons" />
-                <p>{data?.user?.docName}</p>
+                <p>
+                  {/* {data?.user?.docName} */}
+                  Rajendra Patel
+                  </p>
               </div>
               <div className="singleitemdiv">
                 <MdBloodtype className="singledivicons" />
@@ -101,11 +106,17 @@ const Doctor_Profile = () => {
               </div>
               <div className="singleitemdiv">
                 <FaBirthdayCake className="singledivicons" />
-                <p>{data?.user?.DOB}</p>
+                <p>
+                  {/* {data?.user?.DOB} */}
+                  1990-04-27
+                  </p>
               </div>
               <div className="singleitemdiv">
                 <BsFillTelephoneFill className="singledivicons" />
-                <p>{data?.user?.mobile}</p>
+                <p>
+                  {/* {data?.user?.mobile} */}
+                  +91-9985724775
+                  </p>
               </div>
               <div className="singleitemdiv">
                 <button onClick={showModal}>
@@ -126,14 +137,15 @@ const Doctor_Profile = () => {
                     Cancel
                   </Button>,
                   <Button key="submit" onClick={handleFormSubmit}>
-                    Edit
+                    Update
                   </Button>,
                 ]}
               >
                 <form className="inputForm">
                   <input
-                    name="nurseName"
-                    value={formData.docName}
+                    name="docName"
+                    // value={formData.docName}
+                    value="Rajendra Patel"
                     onChange={handleFormChange}
                     type="text"
                     placeholder="Full name"
@@ -194,16 +206,25 @@ const Doctor_Profile = () => {
                 </div>
                 <div className="singleitemdiv">
                   <AiFillCalendar className="singledivicons" />
-                  <p>{data?.user?.age}</p>
+                  <p>
+                    {/* {data?.user?.age} */}
+                    33
+                    </p>
                 </div>
 
                 <div className="singleitemdiv">
                   <MdOutlineCastForEducation className="singledivicons" />
-                  <p>{data?.user?.education}</p>
+                  <p>
+                    {/* {data?.user?.education} */}
+                    M.B.B.S.
+                    </p>
                 </div>
                 <div className="singleitemdiv">
                   <BsHouseFill className="singledivicons" />
-                  <p>{data?.user?.address}</p>
+                  <p>
+                    {/* {data?.user?.address} */}
+                    2P/31, Prakruti Vihar, Bhubaneswar, Odisha
+                    </p>
                 </div>
               </div>
               {/* ***********  Third Div ******************** */}
@@ -213,17 +234,18 @@ const Doctor_Profile = () => {
                 </h2>
                 <div className="singleitemdiv">
                   <BiTime className="singledivicons" />
-                  <p>09:00 AM - 20:00 PM (TIMING)</p>
+                  <p>10:00 AM - 08:00 PM (TIMING)</p>
                 </div>
                 <div className="singleitemdiv">
                   <FaRegHospital className="singledivicons" />
-                  <p>Apollo hospitals</p>
+                  <p>WeCare hospitals</p>
                 </div>
                 <div className="singleitemdiv">
                   <FaMapMarkedAlt className="singledivicons" />
                   <p>
-                    Sri Aurobindo Marg, Ansari Nagar, Ansari Nagar East, New
-                    Delhi.
+                        N/92 Nayapalli,
+                        Patia Square,
+                        Bhubaneswar, Odisha 
                   </p>
                 </div>
               </div>
