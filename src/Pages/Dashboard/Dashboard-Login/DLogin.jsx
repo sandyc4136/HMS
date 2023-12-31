@@ -11,6 +11,7 @@ import {
   forgetPassword,
   NurseLogin,
 } from "../../../Redux/auth/action";
+import Link from "antd/es/typography/Link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Drawer } from "antd";
@@ -209,7 +210,7 @@ const DLogin = () => {
                 required
               />
               <button type="submit">{Loading ? "Loading..." : "Submit"}</button>
-              <p style={{ marginTop: "10px" }}>
+              {/* <p style={{ marginTop: "10px" }}>
                 Forget Password?{" "}
                 <span
                   style={{ color: "blue", cursor: "pointer" }}
@@ -217,73 +218,11 @@ const DLogin = () => {
                 >
                   Get it on Email !
                 </span>
-              </p>
-
-              {/* ********************************************************* */}
-              <Drawer
-                title="Forget Password"
-                placement="left"
-                onClose={onClose}
-                open={open}
-              >
-                <div>
-                  <label style={{ fontSize: "18px" }}>Choose Type</label>
-
-                  <select
-                    name="type"
-                    value={ForgetPassword.type}
-                    onChange={HandleForgetPassword}
-                    required
-                  >
-                    <option value="">User Type</option>
-                    {/* <option value="nurse">Nurse</option> */}
-                    <option value="doctor">Doctor</option>
-                    <option value="admin">Admin</option>
-                  </select>
-                </div>
-                <div>
-                  <label style={{ display: "block", fontSize: "18px" }}>
-                    Enter Email
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="example@mail.com"
-                    name="email"
-                    value={ForgetPassword.email}
-                    onChange={HandleForgetPassword}
-                    required
-                    style={{
-                      width: "100%",
-                      height: "3rem",
-                      borderRadius: "5px",
-                      border: "none",
-                      backgroundColor: "#bce0fb",
-                      fontSize: "18px",
-                      marginTop: "10px",
-                      paddingLeft: "10px",
-                    }}
-                  />
-                </div>
-
-                <button
-                  style={{
-                    width: "50%",
-                    margin: " 20px auto",
-                    display: "flex",
-                    padding: "10px",
-                    fontSize: "18px",
-                    backgroundColor: "#ff9f9f",
-                    border: "none",
-                    borderRadius: "7px",
-                    cursor: "pointer",
-                    justifyContent: "center",
-                  }}
-                  onClick={HandleChangePassword}
-                >
-                  {forgetLoading ? "Loading..." : " Send Mail"}
-                </button>
-              </Drawer>
+              </p> */}
             </form>
+            <button style={{width:'50%','background-color':'pink'}} type="submit">
+            <a href="http://localhost:3000/" style={{'text-decoration':'none'}}>Home</a>
+             </button>
           </div>
         </div>
       </div>

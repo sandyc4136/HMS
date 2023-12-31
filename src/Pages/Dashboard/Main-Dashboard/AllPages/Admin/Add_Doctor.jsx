@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./CSS/Add_Doctor.css";
+import axios from 'axios';
 import doctor from "../../../../../img/doctoravatar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { DoctorRegister, SendPassword } from "../../../../../Redux/auth/action";
@@ -8,87 +9,69 @@ import Sidebar from "../../GlobalFiles/Sidebar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate } from "react-router-dom";
-const notify = (text) => toast(text);
+// const notify = (text) => toast(text);
 
 const AddDoctor = () => {
-  const { data } = useSelector((store) => store.auth);
-
-  const dispatch = useDispatch();
-
-  const [loading, setLoading] = useState(false);
 
   const initData = {
-    docName: "",
+    name: "",
     age: "",
-    mobile: "",
+    emergencyNo: "",
     email: "",
-    bloodGroup: "",
     gender: "",
-    DOB: "",
+    bloodGroup: "",
+    birthdate: "",
     address: "",
     education: "",
     department: "",
-    docID: Date.now(),
+    docID: "",
     password: "",
-    details: "",
+    otherDetails: "",
   };
+
   const [DoctorValue, setDoctorValue] = useState(initData);
+  const [responseData, setResponseData] = useState({});
+
 
   const HandleDoctorChange = (e) => {
     setDoctorValue({ ...DoctorValue, [e.target.name]: e.target.value });
   };
 
-  const HandleDoctorSubmit = (e) => {
+  function HandleDoctorSubmit(e) {
     e.preventDefault();
-    setLoading(true);
-    dispatch(DoctorRegister(DoctorValue)).then((res) => {
-      if (res.message === "Doctor already exists") {
-        setLoading(false);
-        return notify("Doctor Already Exist");
-      }
-      if (res.message === "error") {
-        setLoading(false);
-        return notify("Something went wrong, Please try Again");
-      }
+    let url="http://localhost:8080/doctors/create";
+    axios.post(url,DoctorValue).then((res) => {
+      setResponseData(res);
+        if(res.data.status)
+            alert("Doctor Registered!");
+        else
+            alert("Something went Wrong!");
+      })
 
-      let data = {
-        email: res.data.email,
-        password: res.data.password,
-        userId: res.data.docID,
-      };
-      console.log(data, "DOCTOR REGISTER SUCCESSFULLY");
-      dispatch(SendPassword(data)).then((res) => notify("Account Detais Sent"));
-      setLoading(false);
-      setDoctorValue(initData);
-    });
+      // let data = {
+      //   email: res.data.email,
+      //   password: res.data.password,
+      //   // userId: res.data.docID,
+      // };
   };
-
-  if (data?.isAuthticated === false) {
-    return <Navigate to={"/"} />;
-  }
-
-  if (data?.user.userType !== "admin") {
-    return <Navigate to={"/dashboard"} />;
-  }
 
   return (
     <>
-      <ToastContainer />
       <div className="container">
         <Sidebar />
         <div className="AfterSideBar">
           <div className="Main_Add_Doctor_div">
             <h1>Add Doctors</h1>
             <img src={doctor} alt="doctor" className="avatarimg" />
-            <form onSubmit={HandleDoctorSubmit}>
+            <form action="/dashboard" onSubmit={HandleDoctorSubmit} method="post">
               <div>
                 <label>Doctor Name</label>
                 <div className="inputdiv">
                   <input
                     type="text"
                     placeholder="Full Name"
-                    name="docName"
-                    value={DoctorValue.docName}
+                    name="name"
+                    // value={DoctorValue.name}
                     onChange={HandleDoctorChange}
                     required
                   />
@@ -98,10 +81,10 @@ const AddDoctor = () => {
                 <label>Age</label>
                 <div className="inputdiv">
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Age"
                     name="age"
-                    value={DoctorValue.age}
+                    // value={DoctorValue.age}
                     onChange={HandleDoctorChange}
                     required
                   />
@@ -111,10 +94,10 @@ const AddDoctor = () => {
                 <label>Emergency Number</label>
                 <div className="inputdiv">
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Emergency Number"
-                    name="mobile"
-                    value={DoctorValue.mobile}
+                    name="emergencyNo"
+                    // value={DoctorValue.emergencyNo}
                     onChange={HandleDoctorChange}
                     required
                   />
@@ -125,9 +108,9 @@ const AddDoctor = () => {
                 <div className="inputdiv">
                   <input
                     type="email"
-                    placeholder="abc@abc.com"
+                    placeholder="Email Address"
                     name="email"
-                    value={DoctorValue.email}
+                    // value={DoctorValue.email}
                     onChange={HandleDoctorChange}
                     required
                   />
@@ -138,7 +121,7 @@ const AddDoctor = () => {
                 <div className="inputdiv">
                   <select
                     name="gender"
-                    value={DoctorValue.gender}
+                    // value={DoctorValue.gender}
                     onChange={HandleDoctorChange}
                     required
                   >
@@ -154,7 +137,7 @@ const AddDoctor = () => {
                 <div className="inputdiv">
                   <select
                     name="bloodGroup"
-                    value={DoctorValue.bloodGroup}
+                    // value={DoctorValue.bloodGroup}
                     onChange={HandleDoctorChange}
                     required
                   >
@@ -175,9 +158,9 @@ const AddDoctor = () => {
                 <div className="inputdiv">
                   <input
                     type="date"
-                    placeholder="dd-mm-yy"
-                    name="DOB"
-                    value={DoctorValue.DOB}
+                    placeholder="dd-mm-yyyy"
+                    name="birthdate"
+                    // value={DoctorValue.birthdate}
                     onChange={HandleDoctorChange}
                     required
                   />
@@ -201,9 +184,9 @@ const AddDoctor = () => {
                 <div className="inputdiv">
                   <input
                     type="text"
-                    placeholder="eg.MBBS"
+                    placeholder="eg. MBBS"
                     name="education"
-                    value={DoctorValue.education}
+                    // value={DoctorValue.education}
                     onChange={HandleDoctorChange}
                     required
                   />
@@ -214,7 +197,7 @@ const AddDoctor = () => {
                 <div className="inputdiv">
                   <select
                     name="department"
-                    value={DoctorValue.department}
+                    // value={DoctorValue.department}
                     onChange={HandleDoctorChange}
                     required
                   >
@@ -238,7 +221,7 @@ const AddDoctor = () => {
                     type="text"
                     placeholder="Password"
                     name="password"
-                    value={DoctorValue.password}
+                    // value={DoctorValue.password}
                     onChange={HandleDoctorChange}
                     required
                   />
@@ -252,15 +235,16 @@ const AddDoctor = () => {
                     placeholder="Extra Info"
                     rows="4"
                     cols="50"
-                    name="details"
-                    value={DoctorValue.details}
+                    name="otherDetails"
+                    // value={DoctorValue.otherDetails}
                     onChange={HandleDoctorChange}
-                    required
+            
                   />
                 </div>
               </div>
               <button type="submit" className="formsubmitbutton">
-                {loading ? "Loading..." : "Submit"}
+                {/* {loading ? "Loading..." : "Submit"} */}
+                Submit
               </button>
             </form>
           </div>

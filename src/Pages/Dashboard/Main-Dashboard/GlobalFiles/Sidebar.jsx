@@ -13,6 +13,10 @@ import { MdBedroomChild } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { ImMenu } from "react-icons/im";
 import { FiLogOut } from "react-icons/fi";
+import { VscFeedback } from "react-icons/vsc";
+// import { FaUserDoctor } from "react-icons/fa6";
+import { SiAsciidoctor } from "react-icons/si";
+import { TbListDetails } from "react-icons/tb";
 import { RiAdminLine } from "react-icons/ri";
 import { TbBed } from "react-icons/tb";
 import { MdDashboardCustomize } from "react-icons/md";
@@ -123,6 +127,32 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null}
+             {user?.userType === "admin" ? (
+              <Link className="link" activeclassname="active" to={"/contacts"}>
+                <div className="icon">
+                  <VscFeedback className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Contacts
+                </div>
+              </Link>
+            ) : null}
+            {user?.userType === "admin" ? (
+              <Link className="link" activeclassname="active" to={"/doctors"}>
+                <div className="icon">
+                  <SiAsciidoctor className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Doctors
+                </div>
+              </Link>
+            ) : null}
             {/* {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/addnurse"}>
                 <div className="icon">
@@ -163,41 +193,6 @@ const Sidebar = () => {
                   className="link_text"
                 >
                   Add Beds
-                </div>
-              </Link>
-            ) : null} */}
-
-            {/* {user?.userType === "admin" ? (
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/addambulance"}
-              >
-                <div className="icon">
-                  <FaAmbulance className="mainIcon" />
-                </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Add AMBU
-                </div>
-              </Link>
-            ) : null} */}
-            {/* {user?.userType === "admin" ? (
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/checkpayment"}
-              >
-                <div className="icon">
-                  <RiSecurePaymentLine className="mainIcon" />
-                </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Payments
                 </div>
               </Link>
             ) : null} */}
@@ -260,7 +255,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null}
-            {user?.userType === "doctor" ? (
+            {/* {user?.userType === "doctor" ? (
               <Link
                 className="link"
                 activeclassname="active"
@@ -276,7 +271,7 @@ const Sidebar = () => {
                   Create Report
                 </div>
               </Link>
-            ) : null}
+            ) : null} */}
             {/* {user?.userType === "doctor" ? (
               <Link
                 className="link"
@@ -294,7 +289,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null} */}
-
+           
             <Link
               className="LogOutPath link"
               onClick={() => {

@@ -17,10 +17,14 @@ import Add_Patient from "../Pages/Dashboard/Main-Dashboard/AllPages/Nurse/Add_Pa
 import Book_Appointment from "../Pages/Dashboard/Main-Dashboard/AllPages/Nurse/Book_Appointment";
 import Nurse_Profile from "../Pages/Dashboard/Main-Dashboard/AllPages/Nurse/Nurse_Profile";
 import FrontPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/FrontPage";
+import ViewContact from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/ViewContact";
+ import ViewDoctors from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/ViewDoctors";
+
 const AllRoutes = () => {
   return (
     <>
       <Routes>
+      ******************** Admin Part *************************
         <Route path="/" element={<DLogin />} />
         <Route path="/dashboard" element={<FrontPage />} />
         <Route path="/addoctor" element={<AddDoctor />} />
@@ -29,6 +33,8 @@ const AllRoutes = () => {
         <Route path="/rooms" element={<Beds_Rooms />} />
         <Route path="/admin" element={<Add_Admin />} />
         <Route path="/addbeds" element={<AddBeds />} />
+        <Route path="/contacts" element={<ViewContact />} />
+        <Route path="/doctors" element={<ViewDoctors />} />
         ******************** Doctor Part *************************
         <Route path="/reports" element={<AllReport />} />
         <Route path="/checkappointment" element={<Check_Appointment />} />
