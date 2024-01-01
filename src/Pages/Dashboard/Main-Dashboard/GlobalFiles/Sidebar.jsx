@@ -62,7 +62,7 @@ const Sidebar = () => {
               </div>
             </Link>
 
-            {user?.userType === "nurse" ? (
+            {/* {user?.userType === "nurse" ? (
               <Link
                 className="link"
                 activeclassname="active"
@@ -78,8 +78,8 @@ const Sidebar = () => {
                   Profile
                 </div>
               </Link>
-            ) : null}
-            {user?.userType === "nurse" ? (
+            ) : null} */}
+            {/* {user?.userType === "nurse" ? (
               <Link
                 className="link"
                 activeclassname="active"
@@ -95,9 +95,9 @@ const Sidebar = () => {
                   Add Patient
                 </div>
               </Link>
-            ) : null}
+            ) : null} */}
 
-            {user?.userType === "nurse" ? (
+            {/* {user?.userType === "nurse" ? (
               <Link
                 className="link"
                 activeclassname="active"
@@ -113,7 +113,7 @@ const Sidebar = () => {
                   Appointments
                 </div>
               </Link>
-            ) : null}
+            ) : null} */}
             {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/addoctor"}>
                 <div className="icon">
@@ -166,7 +166,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null} */}
-            {user?.userType === "admin" ? (
+            {/* {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/admin"}>
                 <div className="icon">
                   <RiAdminLine
@@ -181,7 +181,7 @@ const Sidebar = () => {
                   Add Admin
                 </div>
               </Link>
-            ) : null}
+            ) : null} */}
 
             {/* {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/addbeds"}>

@@ -10,29 +10,56 @@ import { BsFillBookmarkCheckFill } from "react-icons/bs";
 // import { MdPayment } from "react-icons/md";
 // import { RiAdminLine } from "react-icons/ri";
 import Sidebar from "./Sidebar";
-import { useEffect } from "react";
+import { useEffect, useState} from "react";
+import axios from "axios";
+import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllData, GetPatients } from "../../../../Redux/Datas/action";
 
 const FrontPage = () => {
-  const columns = [
-    { title: "Name", dataIndex: "patientName", key: "patientName" },
-    { title: "Age", dataIndex: "age", key: "age" },
-    { title: "Disease", dataIndex: "disease", key: "disease" },
-    { title: "Blood Group", dataIndex: "bloodGroup", key: "bloodGroup" },
-    { title: "Department", dataIndex: "department", key: "department" },
-    { title: "Email", dataIndex: "email", key: "email" },
-  ];
+  const [patients, setPatients] = useState([]);
 
-  const { patients } = useSelector((store) => store.data.patients);
-  const {dashboard: { data }} = useSelector((store) => store.data);
+  const styles={
+    // border: "none",
+    width: '100%'
+  }
+
+  useEffect(() => {
+    // Fetch data from your backend API
+    axios.get('http://localhost:8080/customer/All')
+      .then(response =>setPatients(response.data))
+      .catch(error =>console.error('Error fetching Patients:', error));
+    },[]);
+
+    const handleDeletePatient = async (id) => {
+      console.log(id);
+      try {
+        await axios.delete(`http://localhost:8080/customer/delete/${id}`);
+        console.log("deleted");
+        setPatients((prevPatients) => prevPatients.filter((patient) => patient.id !== id));
+      } catch (error) {
+        console.error('Error deleting Patient:', error);
+      }
+    };
+    
+  // const columns = [
+  //   { title: "Name", dataIndex: "patientName", key: "patientName" },
+  //   { title: "Age", dataIndex: "age", key: "age" },
+  //   { title: "Disease", dataIndex: "disease", key: "disease" },
+  //   { title: "Blood Group", dataIndex: "bloodGroup", key: "bloodGroup" },
+  //   { title: "Department", dataIndex: "department", key: "department" },
+  //   { title: "Email", dataIndex: "email", key: "email" },
+  // ];
+
+  // const { patients } = useSelector((store) => store.data.patients);
+  // const {dashboard: { data }} = useSelector((store) => store.data);
 
   // console.log(data);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(GetPatients());
+    // dispatch(GetPatients());
     dispatch(GetAllData());
   }, []);
 
@@ -102,8 +129,8 @@ const FrontPage = () => {
             {" "}
             <div>
               <h1>
-                {data?.appointment}
-                7
+                {/* {data?.appointment} */}
+                3
                 </h1>
               <p>Appointment</p>
             </div>
@@ -122,7 +149,45 @@ const FrontPage = () => {
         <div className="patientDetails">
           <h1>Patient Details</h1>
           <div className="patientBox">
-            <Table columns={columns} />
+          <table>
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                {/* <th>Emergency No.</th> */}
+                                {/* <th>Gender</th> */}
+                                <th>Disease</th>
+                                <th>Blood Group</th>
+                                <th>Department</th>
+                                {/* <th>Address</th> */}
+                                <th>Email</th>
+                                <th>Option</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {patients.map(item => (
+                                <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.age}</td>
+                                <td>{item.disease}</td>                               
+                                <td>{item.bloodGroup}</td>
+                                <td>{item.department}</td>
+                                <td>{item.email}</td>
+                                {/* <td>{item.emergencyNo}</td> */}
+                                 {/* <td>{item.gender}</td> */}
+                                 
+                                 {/* <td>{item.address}</td>
+                                <td>{item.status}</td> */}                                                                                               
+                                <Button variant="btn btn-danger"  type="submit" className="ml-2" style={styles}
+                                onClick={() => handleDeletePatient(item.id)}
+                                > Delete</Button>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+            {/* <Table columns={columns} /> */}
             {/* dataSource={patients}  */}
           </div>
         </div>

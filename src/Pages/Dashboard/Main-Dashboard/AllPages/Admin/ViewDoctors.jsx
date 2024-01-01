@@ -17,14 +17,26 @@ const ViewDoctors = () => {
           .catch(error =>console.error('Error fetching Doctors:', error));
         },[]);
 
-      const handleDeleteDoctor = (id) => {
+      // const handleDeleteDoctor = (id) => {
         
-        axios.delete(`⁠http://localhost:8080/doctors/delete/${id}⁠`)
-            .then(() => {
-                setDoctors(prevDoctors => prevDoctors.filter(doctor => doctor.id !== id));
-            })
-            .catch(error => console.error('Error deleting Doctor:', error));
+      //   axios.delete(`http://localhost/doctors/${id}`)
+      //       .then(() => {
+      //           setDoctors(prevDoctors => prevDoctors.filter(doctor => doctor.id !== id));
+      //       })
+      //       .catch(error => console.error('Error deleting Doctor:', error));
+      //   };
+
+        const handleDeleteDoctor = async (id) => {
+          console.log(id);
+          try {
+            await axios.delete(`http://localhost:8080/doctors/delete/${id}`);
+            console.log("deleted");
+            setDoctors((prevDoctors) => prevDoctors.filter((doctor) => doctor.id !== id));
+          } catch (error) {
+            console.error('Error deleting Doctor:', error);
+          }
         };
+      
   
 
       return (
@@ -44,7 +56,7 @@ const ViewDoctors = () => {
                                 <th>Name</th>
                                 <th>Age</th>
                                 <th>Emergency No.</th>
-                                <th>Email</th>
+                                {/* <th>Email</th> */}
                                 <th>Gender</th>
                                 <th>Blood Group</th>
                                 <th>Department</th>
@@ -60,7 +72,7 @@ const ViewDoctors = () => {
                                 <td>{item.name}</td>
                                 <td>{item.age}</td>
                                 <td>{item.emergencyNo}</td>
-                                <td>{item.email}</td>
+                                {/* <td>{item.email}</td> */}
                                 <td>{item.gender}</td>
                                 <td>{item.bloodGroup}</td>
                                 <td>{item.department}</td>
