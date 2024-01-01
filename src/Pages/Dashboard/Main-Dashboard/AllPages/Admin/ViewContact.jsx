@@ -7,13 +7,7 @@ import { Button } from 'react-bootstrap';
 import Sidebar from "../../GlobalFiles/Sidebar";
 
 const ViewContact = () => {
-
-    // const InitData = {
-    //     name:"",
-    //     email: "",
-    //     contact: "",
-    //     message: ""
-    //   };
+  
       const [contacts, setContacts] = useState([]);
 
 
@@ -24,15 +18,25 @@ const ViewContact = () => {
           .catch(error =>console.error('Error fetching Contacts:', error));
         },[]);
 
-      const handleDeleteContact = (id) => {
-        axios.delete(`http://localhost:8080/contacts/delete/${id}⁠`)
-        // axios.delete('⁠http://localhost:8080/contacts/delete/${id}⁠')
-            .then(() => {
-                setContacts(prevContacts => prevContacts.filter(contact => contact.id !== id));
-            })
-            .catch(error => console.error('Error deleting contact:', error));
-        };
+      // const handleDeleteContact = (id) => {
+       
+      //   axios.delete(`http://localhost:8080/contacts/delete/${id}`)
+      //       .then(() => {
+      //           setContacts(prevContacts => prevContacts.filter(contact => contact.id !== id));
+      //       })
+      //       .catch(error => console.error('Error deleting contact:', error));
+      //   };
   
+      const handleDeleteContact = async (id) => {
+        console.log(id);
+        try {
+          await axios.delete(`http://localhost:8080/contacts/delete/${id}`);
+          console.log("delete");
+          setContacts((prevContacts) => prevContacts.filter((contact) => contact.id !== id));
+        } catch (error) {
+          console.error('Error deleting contact:', error);
+        }
+      };
 
       return (
         <>

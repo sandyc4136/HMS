@@ -18,7 +18,8 @@ const ViewDoctors = () => {
         },[]);
 
       const handleDeleteDoctor = (id) => {
-        axios.delete('⁠http://localhost:8080/doctors/delete/{id}⁠')
+        
+        axios.delete(`⁠http://localhost:8080/doctors/delete/${id}⁠`)
             .then(() => {
                 setDoctors(prevDoctors => prevDoctors.filter(doctor => doctor.id !== id));
             })
@@ -42,28 +43,32 @@ const ViewDoctors = () => {
                                 <th>Id</th>
                                 <th>Name</th>
                                 <th>Age</th>
-                                <th>Department</th>
+                                <th>Emergency No.</th>
                                 <th>Email</th>
-                                <th>Contact No.</th>
+                                <th>Gender</th>
+                                <th>Blood Group</th>
+                                <th>Department</th>
                                 <th>Address</th>
                                 <th>Status</th>
                                 <th>Option</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {doctors.map(doctor => (
-                                <tr key={doctor.id}>
-                                <td>{doctor.id}</td>
-                                <td>{doctor.name}</td>
-                                <td>{doctor.age}</td>
-                                <td>{doctor.department}</td>
-                                <td>{doctor.email}</td>
-                                <td>{doctor.emergencyNo}</td>
-                                <td>{doctor.address}</td>
-                                <td>{doctor.status}</td>
-                                <Button  type="submit" 
-                                onClick={() => handleDeleteDoctor(doctor.id)}
-                                style={{border:'none'}}> Delete</Button>
+                            {doctors.map(item => (
+                                <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.age}</td>
+                                <td>{item.emergencyNo}</td>
+                                <td>{item.email}</td>
+                                <td>{item.gender}</td>
+                                <td>{item.bloodGroup}</td>
+                                <td>{item.department}</td>
+                                <td>{item.address}</td>
+                                <td>{item.status}</td>
+                                <Button variant="btn btn-danger"  type="submit" 
+                                onClick={() => handleDeleteDoctor(item.id)}
+                                > Delete</Button>
                                 </tr>
                             ))}
                             </tbody>

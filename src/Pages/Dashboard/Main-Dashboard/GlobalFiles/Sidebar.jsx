@@ -166,7 +166,7 @@ const Sidebar = () => {
                 </div>
               </Link>
             ) : null} */}
-            {/* {user?.userType === "admin" ? (
+            {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/admin"}>
                 <div className="icon">
                   <RiAdminLine
@@ -181,7 +181,7 @@ const Sidebar = () => {
                   Add Admin
                 </div>
               </Link>
-            ) : null} */}
+            ) : null}
 
             {/* {user?.userType === "admin" ? (
               <Link className="link" activeclassname="active" to={"/addbeds"}>

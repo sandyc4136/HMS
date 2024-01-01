@@ -13,7 +13,7 @@ import { Navigate } from "react-router-dom";
 
 const AddDoctor = () => {
 
-  const initData = {
+  let initialData = {
     name: "",
     age: "",
     emergencyNo: "",
@@ -24,12 +24,11 @@ const AddDoctor = () => {
     address: "",
     education: "",
     department: "",
-    docID: "",
     password: "",
     otherDetails: "",
   };
 
-  const [DoctorValue, setDoctorValue] = useState(initData);
+  const [DoctorValue, setDoctorValue] = useState(initialData);
   const [responseData, setResponseData] = useState({});
 
 
@@ -42,10 +41,18 @@ const AddDoctor = () => {
     let url="http://localhost:8080/doctors/create";
     axios.post(url,DoctorValue).then((res) => {
       setResponseData(res);
-        if(res.data.status)
-            alert("Doctor Registered!");
-        else
-            alert("Something went Wrong!");
+        // if(res.data.status)
+        //     alert("Doctor Registered!");
+        // else
+        //     alert("Something went Wrong!");
+
+        try{
+          alert("Doctor Registered!");
+        }
+          
+        catch(error){
+          alert("Something went Wrong!");
+        }
       })
 
       // let data = {
@@ -218,7 +225,7 @@ const AddDoctor = () => {
                 <label>Password</label>
                 <div className="inputdiv">
                   <input
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     name="password"
                     // value={DoctorValue.password}
