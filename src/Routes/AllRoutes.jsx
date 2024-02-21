@@ -19,6 +19,8 @@ import Nurse_Profile from "../Pages/Dashboard/Main-Dashboard/AllPages/Nurse/Nurs
 import FrontPage from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/FrontPage";
 import ViewContact from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/ViewContact";
  import ViewDoctors from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/ViewDoctors";
+import UpdateDoctorModal from "../Pages/Dashboard/Main-Dashboard/AllPages/Admin/UpdateDoctorModal";
+import AdminDashboard from "../Pages/Dashboard/Main-Dashboard/GlobalFiles/AdminDashboard";
 
 const AllRoutes = () => {
   return (
@@ -26,7 +28,8 @@ const AllRoutes = () => {
       <Routes>
       ******************** Admin Part *************************
         <Route path="/" element={<DLogin />} />
-        <Route path="/dashboard" element={<FrontPage />} />
+       
+        <Route path="/adminDashboard" element={<AdminDashboard />} />
         <Route path="/addoctor" element={<AddDoctor />} />
         <Route path="/addambulance" element={<Add_Ambulance />} />
         <Route path="/addnurse" element={<Add_Nurse />} />
@@ -35,8 +38,10 @@ const AllRoutes = () => {
         <Route path="/addbeds" element={<AddBeds />} />
         <Route path="/contacts" element={<ViewContact />} />
         <Route path="/doctors" element={<ViewDoctors />} />
+        <Route path="/updateDoctor" element={<UpdateDoctorModal />} />
         ******************** Doctor Part *************************
         <Route path="/reports" element={<AllReport />} />
+        <Route path="/dashboard" element={<FrontPage />} />
         <Route path="/checkappointment" element={<Check_Appointment />} />
         <Route path="/createslip" element={<Discharge_and_Create_Slip />} />
         <Route path="/patientdetails" element={<Patient_Details />} />

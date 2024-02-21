@@ -7,22 +7,22 @@ import {
   DeleteAppointment,
   GetAllAppointment,
 } from "../../../../../Redux/Datas/action";
-import Sidebar from "../../GlobalFiles/Sidebar";
+import axios from "axios";
+// import Sidebar from "../../GlobalFiles/Sidebar";
+import Admin_Sidebar from "../Admin/Admin_Sidebar";
 
 const Check_Appointment = () => {
-  const { data } = useSelector((store) => store.auth);
+  
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from your backend API
+    axios.get(`http://localhost:8080/fetchAllAppointments`)
+      .then(response => setAppointments(response.data))
+      .catch(error => console.error('Error fetching Appointments:', error));
+  }, []);
 
   const disptach = useDispatch();
-
-  const columns = [
-    { title: "Patient Name", dataIndex: "patientName", key: "patientName" },
-    { title: "Mobile", dataIndex: "mobile", key: "mobile" },
-    { title: "Disease", dataIndex: "disease", key: "disease" },
-    { title: "Department", dataIndex: "department", key: "department" },
-    { title: "Date", dataIndex: "date", key: "date" },
-  ];
-
-  const AllAppointment = useSelector((state) => state.data.Appointments);
 
   const DeleteAppoint = (id) => {
     disptach(DeleteAppointment(id));
@@ -31,18 +31,10 @@ const Check_Appointment = () => {
     disptach(GetAllAppointment());
   }, []);
 
-  if (data?.isAuthticated === false) {
-    return <Navigate to={"/"} />;
-  }
-
-  if (data?.user.userType !== "doctor") {
-    return <Navigate to={"/dashboard"} />;
-  }
-
   return (
     <>
       <div className="container">
-        <Sidebar />
+        <Admin_Sidebar />
         <div className="AfterSideBar">
           <div className="Payment_Page">
             <h1 style={{ marginBottom: "2rem" }}>Appointment Details</h1>
@@ -50,24 +42,33 @@ const Check_Appointment = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>Patient Name</th>
-                    <th>Mobile</th>
-                    <th>Disease</th>
-                    <th>Department</th>
-                    <th>Date</th>
-                    <th>Resolve</th>
+                  <th>Patient Name</th>
+                    
+                    <th>Patient Disease</th>
+                    <th>Patient Age</th>
+                    <th>Patient Gender</th>
+                    <th>Doctor Name</th>
+                    <th>Doctor Department</th>
+                    <th>Appointment Date</th>
+                    <th>Appointment Time</th>
+                    <th>Options</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {AllAppointment?.map((ele) => {
-                    return (
-                      <tr>
-                        <td>{ele.patientName}</td>
-                        <td>{ele.mobile}</td>
-                        <td>{ele.disease}</td>
-                        <td>{ele.department}</td>
-                        <td>{ele.date}</td>
-                        <td>
+                {appointments.map(([patientId, patient, doctor]) => {
+                  
+                      return (
+                        <tr key={patientId}>
+                          <td>{patient.fullName}</td>
+                         
+                          <td>{patient.disease}</td>
+                          <td>{patient.age}</td>
+                          <td>{patient.gender}</td>
+                          <td>{doctor.name}</td>
+                          <td>{doctor.department}</td>
+                          <td>{patient.appointments.length > 0 ? patient.appointments[0].appointmentDate : "N/A"}</td>
+                          <td>{patient.appointments.length > 0 ? patient.appointments[0].time : "N/A"}</td>
+                          <td>
                           <button
                             style={{
                               border: "none",
@@ -76,13 +77,15 @@ const Check_Appointment = () => {
                               background: "transparent",
                               cursor: "pointer",
                             }}
-                            onClick={() => DeleteAppoint(ele._id)}
+                            onClick={() => DeleteAppoint(patientId.id)}
                           >
                             Delete
                           </button>
                         </td>
-                      </tr>
-                    );
+                        </tr>
+                      );
+                       
+                      
                   })}
                 </tbody>
               </table>

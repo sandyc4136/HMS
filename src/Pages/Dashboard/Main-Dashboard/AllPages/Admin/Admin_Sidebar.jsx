@@ -23,13 +23,13 @@ import { MdDashboardCustomize } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-const Sidebar = () => {
+const Admin_Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
 
-  const {
-    data: { user },
-  } = useSelector((state) => state.auth);
+  // const {
+  //   data: { user },
+  // } = useSelector((state) => state.auth);
 
   function toggle() {
     setIsOpen(!isOpen);
@@ -60,7 +60,9 @@ const Sidebar = () => {
             </div>
           </div>
           <div className="bottomSection">
-            <Link className="link" activeclassname="active" to={"/dashboard"}>
+          {isLogin && (
+              <>
+                 <Link className="link" activeclassname="active" to={"/adminDashboard"}>
               <div className="icon">
                 <MdDashboardCustomize className="mainIcon" />
               </div>
@@ -71,60 +73,11 @@ const Sidebar = () => {
                 DashBoard
               </div>
             </Link>
-
-            {/* {user?.userType === "nurse" ? (
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/nurseprofile"}
-              >
-                <div className="icon">
-                  <CgProfile className="mainIcon" />
-                </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Profile
-                </div>
-              </Link>
-            ) : null} */}
-            {/* {user?.userType === "nurse" ? (
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/addpatient"}
-              >
-                <div className="icon">
-                  <FaHospitalUser className="mainIcon" />
-                </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Add Patient
-                </div>
-              </Link>
-            ) : null} */}
-
-            {/* {user?.userType === "nurse" ? (
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/bookappointment"}
-              >
-                <div className="icon">
-                  <BsBookmarkPlus className="mainIcon" />
-                </div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className="link_text"
-                >
-                  Appointments
-                </div>
-              </Link>
-            ) : null} */}
-            {user?.userType === "admin" ? (
+              </>
+              )}
+           
+           {isLogin && (
+              <>
               <Link className="link" activeclassname="active" to={"/addoctor"}>
                 <div className="icon">
                   <AiOutlineUserAdd className="mainIcon" />
@@ -136,8 +89,11 @@ const Sidebar = () => {
                   Add Doctor
                 </div>
               </Link>
-            ) : null}
-             {user?.userType === "admin" ? (
+              </>
+            )}
+
+            {isLogin && (
+              <>
               <Link className="link" activeclassname="active" to={"/contacts"}>
                 <div className="icon">
                   <VscFeedback className="mainIcon" />
@@ -149,8 +105,11 @@ const Sidebar = () => {
                   Contacts
                 </div>
               </Link>
-            ) : null}
-            {user?.userType === "admin" ? (
+              </>
+            )}
+            
+            {isLogin && (
+              <>
               <Link className="link" activeclassname="active" to={"/doctors"}>
                 <div className="icon">
                   <SiAsciidoctor className="mainIcon" />
@@ -162,27 +121,56 @@ const Sidebar = () => {
                   Doctors
                 </div>
               </Link>
-            ) : null}
-           
-
-
-           
-              <Link
-                className="link"
-                activeclassname="active"
-                to={"/doctorprofile"}
-              >
+              </>
+            )}
+              
+            {/* {user?.userType === "admin" ? (
+              <Link className="link" activeclassname="active" to={"/addnurse"}>
                 <div className="icon">
-                  <SlUserFollow className="mainIcon" />
+                  <GiNurseFemale className="mainIcon" />
                 </div>
                 <div
                   style={{ display: isOpen ? "block" : "none" }}
                   className="link_text"
                 >
-                  Profile
+                  Add Nurse
                 </div>
               </Link>
-           
+            ) : null} */}
+            {/* {user?.userType === "admin" ? (
+              <Link className="link" activeclassname="active" to={"/admin"}>
+                <div className="icon">
+                  <RiAdminLine
+                    className="mainIcon"
+                    style={{ color: "white" }}
+                  />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Add Admin
+                </div>
+              </Link>
+            ) : null} */}
+
+            {/* {user?.userType === "admin" ? (
+              <Link className="link" activeclassname="active" to={"/addbeds"}>
+                <div className="icon">
+                  <TbBed className="mainIcon" />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text"
+                >
+                  Add Beds
+                </div>
+              </Link>
+            ) : null} */}
+
+            
+             
+            
             <Link className="link" activeclassname="active" to={"/rooms"}>
               <div className="icon">
                 <MdBedroomChild className="mainIcon" />
@@ -259,6 +247,7 @@ const Sidebar = () => {
               </Link>
             ) : null} */}
            {/* {isLogin? ( */}
+
             <Link
               className="LogOutPath link"
               onClick={() => {
@@ -287,4 +276,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Admin_Sidebar;

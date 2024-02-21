@@ -38,7 +38,7 @@ const AddDoctor = () => {
 
   function HandleDoctorSubmit(e) {
     e.preventDefault();
-    let url="http://localhost:8080/doctors/create";
+    let url="http://localhost:8080/registerDoctor";
     axios.post(url,DoctorValue).then((res) => {
       setResponseData(res);
         // if(res.data.status)

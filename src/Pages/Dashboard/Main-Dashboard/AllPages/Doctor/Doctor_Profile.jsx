@@ -16,11 +16,13 @@ import { GetDoctorDetails } from "../../../../../Redux/Datas/action";
 import { Navigate } from "react-router-dom";
 import image from "../../../../../img/Doctorr1.jpeg";
 import "./CSS/Doctor_Profile.css";
+import axios from "axios";
 
 // *********************************************************
 const Doctor_Profile = () => {
-  const { data } = useSelector((store) => store.auth);
+  // const { data } = useSelector((store) => store.auth);
 
+  const id=localStorage.getItem('id');
   const disptach = useDispatch();
 
   useEffect(() => {
@@ -53,32 +55,53 @@ const Doctor_Profile = () => {
   };
 
   const [formData, setFormData] = useState({
-    docName: data.user.docName,
-    age: data.user.age,
-    gender: data.user.gender,
-    bloodGroup: data.user.bloodGroup,
-    education: data.user.education,
-    mobile: data.user.mobile,
-    DOB: data.user.DOB,
+    name: "",
+    age: "",
+    gender: "",
+    bloodGroup: "",
+    education: "",
+    mobile: "",
+    DOB: "",
   });
 
+  useEffect(() => {
+    const fetchDoctorDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/fetchDoctor/${id}`,formData);
+        setFormData(response.data);
+      } catch (error) {
+        console.error("Error fetching doctor details:", error);
+      }
+    };
+    fetchDoctorDetails();
+  }, []);
+  
+  const updateDoctorProfile = async (id) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/updateDoctor/${id}`, formData);
+      console.log('Updated Doctor Profile:', response.data);
+      // Handle success or update state accordingly
+    } catch (error) {
+      console.error('Error updating Doctor Profile:', error);
+    }
+  };
+  
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFormSubmit = () => {
-    disptach(UpdateDoctor(formData, data.user._id));
-    success("user updated");
-    handleOk();
+  const handleFormSubmit = (e) => {
+    updateDoctorProfile();
+    e.preventDefault();
   };
 
-  if (data?.isAuthticated === false) {
-    return <Navigate to={"/"} />;
-  }
+  // if (data?.isAuthticated === false) {
+  //   return <Navigate to={"/"} />;
+  // }
 
-  if (data?.user.userType !== "doctor") {
-    return <Navigate to={"/dashboard"} />;
-  }
+  // if (data?.user.userType !== "doctor") {
+  //   return <Navigate to={"/dashboard"} />;
+  // }
 
   return (
     <>
@@ -96,13 +119,13 @@ const Doctor_Profile = () => {
               <div className="singleitemdiv">
                 <GiMeditation className="singledivicons" />
                 <p>
-                  {/* {data?.user?.docName} */}
-                  Rajendra Patel
+                  {formData.name}
+                  {/* Rajendra Patel */}
                   </p>
               </div>
               <div className="singleitemdiv">
                 <MdBloodtype className="singledivicons" />
-                <p>{data?.user?.bloodGroup}</p>
+                <p>{formData.bloodGroup}</p>
               </div>
               <div className="singleitemdiv">
                 <FaBirthdayCake className="singledivicons" />
@@ -114,8 +137,8 @@ const Doctor_Profile = () => {
               <div className="singleitemdiv">
                 <BsFillTelephoneFill className="singledivicons" />
                 <p>
-                  {/* {data?.user?.mobile} */}
-                  +91-9985724775
+                  {formData.mobile}
+                 
                   </p>
               </div>
               <div className="singleitemdiv">
@@ -144,8 +167,8 @@ const Doctor_Profile = () => {
                 <form className="inputForm">
                   <input
                     name="docName"
-                    // value={formData.docName}
-                    value="Rajendra Patel"
+                    value={formData.docName}
+                   
                     onChange={handleFormChange}
                     type="text"
                     placeholder="Full name"
@@ -202,28 +225,28 @@ const Doctor_Profile = () => {
                 </h2>
                 <div className="singleitemdiv">
                   <BsGenderAmbiguous className="singledivicons" />
-                  <p>{data?.user?.gender}</p>
+                  <p>{formData.gender}</p>
                 </div>
                 <div className="singleitemdiv">
                   <AiFillCalendar className="singledivicons" />
                   <p>
-                    {/* {data?.user?.age} */}
-                    33
+                    {formData.age}
+                    
                     </p>
                 </div>
 
                 <div className="singleitemdiv">
                   <MdOutlineCastForEducation className="singledivicons" />
                   <p>
-                    {/* {data?.user?.education} */}
-                    M.B.B.S.
+                    {formData.education}
+                   
                     </p>
                 </div>
                 <div className="singleitemdiv">
                   <BsHouseFill className="singledivicons" />
                   <p>
-                    {/* {data?.user?.address} */}
-                    2P/31, Prakruti Vihar, Bhubaneswar, Odisha
+                    {formData.address}
+                 
                     </p>
                 </div>
               </div>

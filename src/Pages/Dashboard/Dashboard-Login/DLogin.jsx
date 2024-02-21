@@ -1,126 +1,137 @@
-import React, { useState } from "react";
-import { Radio } from "antd";
+
+import React, { useState, useEffect } from "react";
+import { Alert, Radio } from "antd";
 import banner from "../../../img/banner1.jpeg";
 import admin from "../../../img/user.png";
 import "./DLogin.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  AdminLogin,
-  DoctorLogin,
-  forgetPassword,
-  NurseLogin,
-} from "../../../Redux/auth/action";
+import axios from "axios";
+
+// import {
+//   AdminLogin,
+//   DoctorLogin,
+//   forgetPassword,
+//   NurseLogin,
+// } from "../../../Redux/auth/action";
 import Link from "antd/es/typography/Link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Drawer } from "antd";
+import AdminDashboard from "../Main-Dashboard/GlobalFiles/AdminDashboard";
+
 const notify = (text) => toast(text);
 
 const DLogin = () => {
 
+  const [isLogin,setIsLogin] = useState(false);
+
+  useEffect( ()=> {
+    let email=localStorage.getItem("user");
+    if (email) {
+        setIsLogin(true);
+    }else{
+      setIsLogin(false);
+    }
+   },[isLogin]);
+
+
+  const navigate = useNavigate();
   const img_style={
     width: '100%'
   }
 
-  const [open, setOpen] = useState(false);
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
 
-  const onClose = () => {
-    setOpen(false);
-  };
+  // let[error,setError]=useState({errorData:null,isError:false})
+
+  // const [open, setOpen] = useState(false);
+
+  // const showDrawer = () => {
+  //   setOpen(true);
+  // };
+
+  // const onClose = () => {
+  //   setOpen(false);
+  // };
 
   // ************************************************
-  const [Loading, setLoading] = useState(false);
-  const [placement, SetPlacement] = useState("Doctor");
+  // const [Loading, setLoading] = useState(false);
+  const [placement, SetPlacement] = useState("Admin");
   const [formvalue, setFormvalue] = useState({
-    ID: "",
+    email: "",
     password: "",
   });
-  const dispatch = useDispatch();
 
   const Handlechange = (e) => {
     setFormvalue({ ...formvalue, [e.target.name]: e.target.value });
   };
-  const navigate = useNavigate();
+
+//   const handleEmailChange = (e) =>{
+//     setFormvalue({
+//       ...formvalue,
+//       email: e.target.value,
+//     });
+//   };
+
+//   const handlePasswordChange = (e) => {
+//     setFormvalue({
+//         ...formvalue,
+//         password: e.target.value,
+//     });
+// };
+
+  
   const HandleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    if (formvalue.ID !== "" && formvalue.password !== "") {
-      // if (placement === "Nurse") {
-      //   let data = {
-      //     ...formvalue,
-      //     nurseID: formvalue.ID,
-      //   };
-      //   dispatch(NurseLogin(data)).then((res) => {
-      //     if (res.message === "Successful") {
-      //       notify("Login Successful");
-      //       setLoading(false);
-      //       return navigate("/dashboard");
-      //     }
-      //     if (res.message === "Wrong credentials") {
-      //       setLoading(false);
+    if (formvalue.email !== "" && formvalue.password !== "") {
 
-      //       notify("Wrong credentials");
-      //     }
-      //     if (res.message === "Error") {
-      //       setLoading(false);
-
-      //       notify("Something went Wrong, Please Try Again");
-      //     }
-      //   });
-      // } 
        if (placement === "Doctor") {
         let data = {
           ...formvalue,
-          docID: formvalue.ID,
+          docEmail: formvalue.email,
         };
         console.log(data);
-        dispatch(DoctorLogin(data)).then((res) => {
-          if (res.message === "Successful") {
-            notify("Login Successful");
-            setLoading(false);
-
+        axios.post('http://localhost:8080/doctorLogin', data)
+          .then((response) => {
+            if(response.data.status){
+              localStorage.setItem('user', formvalue.email);
+             alert("Login Successful");
             return navigate("/dashboard");
+           // console.log(response.data);
           }
-          if (res.message === "Wrong credentials") {
-            setLoading(false);
-
-            notify("Wrong credentials");
+          else {
+            alert("Invalid Login");
           }
-          if (res.message === "Error") {
-            setLoading(false);
-
-            notify("Something went Wrong, Please Try Again");
-          }
-        });
+          })
+          .catch(error => {console.error('Error fetching Details:', error)
+              alert("invalid Login");
+           });
       } else if (placement === "Admin") {
         let data = {
           ...formvalue,
-          adminID: formvalue.ID,
+          adminEmail: formvalue.email,
         };
-        dispatch(AdminLogin(data)).then((res) => {
-          if (res.message === "Successful") {
-            notify("Login Successful");
-            setLoading(false);
 
-            return navigate("/dashboard");
+        console.log(data);
+        axios.post('http://localhost:8080/adminLogin', data)
+          .then(response => {
+            if(response.data.status){
+              localStorage.setItem('user', formvalue.email);
+            alert("Login Successful");
+             return navigate("/adminDashboard");
           }
-          if (res.message === "Wrong credentials") {
-            setLoading(false);
-
-            notify("Wrong credentials");
-          }
-          if (res.message === "Error") {
-            setLoading(false);
-
-            notify("Something went Wrong, Please Try Again");
-          }
-        });
+            else{
+              alert("invalid Login");
+            }
+          }).catch(error => {
+            console.error('Error fetching Details:', error);
+            //  alert("invalid Login");
+            });
       }
+    }
+    else{
+      notify("Please Enter Email and Password");
     }
   };
 
@@ -128,36 +139,6 @@ const DLogin = () => {
     SetPlacement(e.target.value);
   };
 
-  const [ForgetPassword, setForgetPassword] = useState({
-    type: "",
-    email: "",
-  });
-
-  const HandleForgetPassword = (e) => {
-    setForgetPassword({ ...ForgetPassword, [e.target.name]: e.target.value });
-  };
-
-  const [forgetLoading, setforgetLoading] = useState(false);
-
-  const HandleChangePassword = () => {
-    if (ForgetPassword.type === "") {
-      return notify("Please Fill all Details");
-    }
-    setforgetLoading(true);
-    dispatch(forgetPassword(ForgetPassword)).then((res) => {
-      if (res.message === "User not found") {
-        setforgetLoading(false);
-        return notify("User Not Found");
-      }
-      setForgetPassword({
-        type: "",
-        email: "",
-      });
-      onClose();
-      setforgetLoading(false);
-      return notify("Account Details Send");
-    });
-  };
 
   return (
     <>
@@ -175,9 +156,7 @@ const DLogin = () => {
               onChange={placementChange}
               className={"radiogroup"}
             >
-              {/* <Radio.Button value="Nurse" className={"radiobutton"}>
-                Nurse
-              </Radio.Button> */}
+             
               <Radio.Button value="Doctor" className={"radiobutton"}>
                 Doctor
               </Radio.Button>
@@ -190,14 +169,13 @@ const DLogin = () => {
             <img src={admin} alt="profile" />
           </div>
           <div>
-            {/* <p>ID - 100</p>
-            <p>Password - masai</p> */}
-            <form onSubmit={HandleSubmit}>
-              <h3>{placement} ID</h3>
+           
+            <form >
+              <h3>{placement} Email</h3>
               <input
-                type="number"
-                name="ID"
-                value={formvalue.ID}
+                type="email"
+                name="email"
+                value={formvalue.email}
                 onChange={Handlechange}
                 required
               />
@@ -209,16 +187,9 @@ const DLogin = () => {
                 onChange={Handlechange}
                 required
               />
-              <button type="submit">{Loading ? "Loading..." : "Submit"}</button>
-              {/* <p style={{ marginTop: "10px" }}>
-                Forget Password?{" "}
-                <span
-                  style={{ color: "blue", cursor: "pointer" }}
-                  onClick={showDrawer}
-                >
-                  Get it on Email !
-                </span>
-              </p> */}
+              <button type="submit" onClick={HandleSubmit}>
+                Submit
+                </button>
             </form>
             <button style={{width:'50%','background-color':'pink'}} type="submit">
             <a href="http://localhost:3000/" style={{'text-decoration':'none'}}>Home</a>
@@ -231,3 +202,10 @@ const DLogin = () => {
 };
 
 export default DLogin;
+
+
+
+
+
+
+

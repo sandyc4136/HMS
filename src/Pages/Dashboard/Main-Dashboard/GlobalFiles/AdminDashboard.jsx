@@ -1,22 +1,23 @@
 import { Table } from "antd";
 import React from "react";
 import { MdPersonAdd } from "react-icons/md";
-// import { FaUserNurse } from "react-icons/fa";
+import { FaUserNurse } from "react-icons/fa";
 import { RiEmpathizeLine } from "react-icons/ri";
 import { FaBed } from "react-icons/fa";
 // import { MdOutlineBedroomParent } from "react-icons/md";
-// import { FaAmbulance } from "react-icons/fa";
+import { FaAmbulance } from "react-icons/fa";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
 // import { MdPayment } from "react-icons/md";
-// import { RiAdminLine } from "react-icons/ri";
+import { RiAdminLine } from "react-icons/ri";
 import Sidebar from "./Sidebar";
 import { useEffect, useState} from "react";
 import axios from "axios";
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import { GetAllData, GetPatients } from "../../../../Redux/Datas/action";
+import Admin_Sidebar from "../AllPages/Admin/Admin_Sidebar";
 
-const FrontPage = () => {
+const AdminDashboard = () => {
   const [patients, setPatients] = useState([]);
 
   const styles={
@@ -41,31 +42,21 @@ const FrontPage = () => {
         console.error('Error deleting Patient:', error);
       }
     };
-    
-  // const columns = [
-  //   { title: "Name", dataIndex: "patientName", key: "patientName" },
-  //   { title: "Age", dataIndex: "age", key: "age" },
-  //   { title: "Disease", dataIndex: "disease", key: "disease" },
-  //   { title: "Blood Group", dataIndex: "bloodGroup", key: "bloodGroup" },
-  //   { title: "Department", dataIndex: "department", key: "department" },
-  //   { title: "Email", dataIndex: "email", key: "email" },
-  // ];
 
-  // const { patients } = useSelector((store) => store.data.patients);
-  const {dashboard: { data }} = useSelector((store) => store.data);
+//   const {dashboard: { data }} = useSelector((store) => store.data);
 
   // console.log(data);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // dispatch(GetPatients());
-    dispatch(GetAllData());
-  }, []);
+//   useEffect(() => {
+//     // dispatch(GetPatients());
+//     dispatch(GetAllData());
+//   }, []);
 
   return (
     <div className="container">
-      <Sidebar />
+      <Admin_Sidebar />
       <div className="AfterSideBar">
         <h1 style={{ color: "rgb(184 191 234)" }}>Overview</h1>
         <div className="maindiv">
@@ -79,14 +70,14 @@ const FrontPage = () => {
             </div>
             <MdPersonAdd className="overviewIcon" />
           </div>
-          {/* <div className="two commondiv">
+          <div className="two commondiv">
             {" "}
             <div>
-              <h1>{data?.nurse}</h1>
+              <h1>5</h1>
               <p>Nurse</p>
             </div>
             <FaUserNurse className="overviewIcon" />
-          </div> */}
+          </div>
           <div className="three commondiv">
             <div>
               <h1>
@@ -97,14 +88,14 @@ const FrontPage = () => {
             </div>
             <RiEmpathizeLine className="overviewIcon" />
           </div>
-          {/* <div className="six commondiv">
+          <div className="six commondiv">
             {" "}
             <div>
-              <h1>{data?.admin}</h1>
+              <h1>2</h1>
               <p>Admin</p>
             </div>
             <RiAdminLine className="overviewIcon" />
-          </div> */}
+          </div>
           <div className="four commondiv">
             {" "}
             <div>
@@ -117,20 +108,20 @@ const FrontPage = () => {
             <FaBed className="overviewIcon" />
           </div>
 
-          {/* <div className="five commondiv">
+          <div className="five commondiv">
             {" "}
             <div>
-              <h1>{data?.ambulance}</h1>
+              <h1>3</h1>
               <p>Ambulance</p>
             </div>
             <FaAmbulance className="overviewIcon" />
-          </div> */}
+          </div>
           <div className="six commondiv">
             {" "}
             <div>
               <h1>
                 {/* {data?.appointment} */}
-                3
+                4
                 </h1>
               <p>Appointment</p>
             </div>
@@ -196,4 +187,4 @@ const FrontPage = () => {
   );
 };
 
-export default FrontPage;
+export default AdminDashboard;
